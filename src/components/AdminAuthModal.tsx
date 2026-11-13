@@ -13,8 +13,8 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
-  title = 'Administrator Verification Required',
-  description = 'Access to adding examination questions and viewing student performance records is restricted to verified administrators.'
+  title = 'Admin Login',
+  description = 'Enter admin credentials to add questions and view student performance.'
 }) => {
   const [adminId, setAdminId] = useState('');
   const [password, setPassword] = useState('');
@@ -54,13 +54,10 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-base font-bold text-white tracking-tight">Admin Gate</span>
-                <span className="text-[10px] bg-amber-500/30 text-amber-300 font-mono px-1.5 py-0.5 rounded border border-amber-400/30 font-semibold">
-                  Restricted Access
-                </span>
+                <span className="text-base font-bold text-white tracking-tight">Admin Access</span>
               </div>
               <p className="text-xs text-slate-300 mt-0.5 font-sans">
-                Oxford Examination Registry
+                ExamSphere Portal
               </p>
             </div>
           </div>
@@ -94,14 +91,14 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-xs flex items-center justify-between">
             <div className="flex items-center gap-2 font-mono text-[11px]">
               <Lock className="w-3.5 h-3.5 text-slate-400" />
-              <span>Authorized Admin ID: <strong className="text-slate-800">admin@123</strong></span>
+              <span>Admin ID: <strong className="text-slate-800">admin@123</strong></span>
             </div>
             <button
               type="button"
               onClick={handleQuickFill}
               className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 underline cursor-pointer"
             >
-              Fill Credentials
+              Auto-fill
             </button>
           </div>
 
@@ -109,7 +106,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Admin Username / Identifier
+                Username
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -126,7 +123,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Admin Password
+                Password
               </label>
               <div className="relative">
                 <KeyRound className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -156,7 +153,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
               className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5"
             >
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Verify & Unlock Admin</span>
+              <span>Unlock Admin</span>
             </button>
           </div>
         </form>

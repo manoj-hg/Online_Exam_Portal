@@ -13,7 +13,8 @@ import { ExamRulesModal } from './components/ExamRulesModal';
 import { SystemDiagramsView } from './components/SystemDiagramsView';
 import { AuthDatabaseDashboardView } from './components/AuthDatabaseDashboardView';
 import { LoginModal } from './components/LoginModal';
-import { auth, onAuthStateChanged, fetchAllExamsFromDb, saveExamToDb, saveSubmissionToDb } from './lib/firebase';
+import { LoginPortalView, AuthenticatedPortalUser } from './components/LoginPortalView';
+import { auth, onAuthStateChanged, logoutUser, fetchAllExamsFromDb, saveExamToDb, saveSubmissionToDb } from './lib/firebase';
 import { AdminAuthModal } from './components/AdminAuthModal';
 import { AddQuestionModal } from './components/AddQuestionModal';
 import { ExamInstructionsModal } from './components/ExamInstructionsModal';
@@ -21,6 +22,9 @@ import { ExamQuestion } from './types/exam';
 import { Calendar, Clock, BookOpen, Award, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [cachedFirebaseUser, setCachedFirebaseUser] = useState<any>(null);
+
   const [exams, setExams] = useState<Exam[]>(MOCK_EXAMS);
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [userRole, setUserRole] = useState<'student' | 'faculty'>('student');
@@ -31,9 +35,7 @@ export default function App() {
   const [pendingExamForInstructions, setPendingExamForInstructions] = useState<Exam | null>(null);
 
   // Admin access verification state for admin@123 / admin@123
-  const [isAdminVerified, setIsAdminVerified] = useState<boolean>(() => {
-    return localStorage.getItem('examsphere_admin_verified') === 'true';
-  });
+  const [isAdminVerified, setIsAdminVerified] = useState<boolean>(false);
   const [isAdminAuthModalOpen, setIsAdminAuthModalOpen] = useState<boolean>(false);
   const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState<boolean>(false);
 
@@ -49,16 +51,62 @@ export default function App() {
   const [isCreateExamModalOpen, setIsCreateExamModalOpen] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
 
+  // Handle full portal login before entering website
+  const handlePortalLogin = (user: AuthenticatedPortalUser) => {
+    setCurrentUser(user);
+    setUserRole(user.role);
+    setIsAuthenticated(true);
+    sessionStorage.setItem('examsphere_authenticated', 'true');
+    sessionStorage.setItem('examsphere_user', JSON.stringify(user));
+
+    if (user.isAdmin) {
+      setIsAdminVerified(true);
+      localStorage.setItem('examsphere_admin_verified', 'true');
+    } else {
+      setIsAdminVerified(false);
+      localStorage.removeItem('examsphere_admin_verified');
+    }
+
+    setIsRulesModalOpen(true);
+  };
+
+  // Handle sign out back to pre-entry login module
+  const handleSignOut = async () => {
+    try {
+      await logoutUser();
+    } catch {
+      // Ignore if session was local credential-based
+    }
+    sessionStorage.removeItem('examsphere_authenticated');
+    sessionStorage.removeItem('examsphere_user');
+    localStorage.removeItem('examsphere_admin_verified');
+    setIsAuthenticated(false);
+    setIsAdminVerified(false);
+    setCurrentUser(null);
+    setUserRole('student');
+    setCurrentTab('dashboard');
+    setActiveExam(null);
+    setActiveSession(null);
+  };
+
   // Handle successful Admin login
   const handleAdminVerificationSuccess = () => {
     setIsAdminVerified(true);
     localStorage.setItem('examsphere_admin_verified', 'true');
     setUserRole('faculty');
-    setCurrentUser({
+    const adminUser = {
+      uid: 'admin-123',
       displayName: 'Administrator (admin@123)',
       email: 'admin@123',
-      role: 'faculty'
-    });
+      candidateId: 'FAC-0491',
+      department: 'Computer Science',
+      role: 'faculty' as const,
+      isAdmin: true
+    };
+    setCurrentUser(adminUser);
+    sessionStorage.setItem('examsphere_authenticated', 'true');
+    sessionStorage.setItem('examsphere_user', JSON.stringify(adminUser));
+    setIsAuthenticated(true);
   };
 
   // Add question to target exam paper and persist to Cloud Firestore
@@ -85,14 +133,7 @@ export default function App() {
   // Connect Firebase Auth and load cloud Firestore exams on boot
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
-      if (user) {
-        setCurrentUser(user);
-        if (user.email?.includes('faculty')) {
-          setUserRole('faculty');
-        }
-      } else {
-        setCurrentUser(null);
-      }
+      setCachedFirebaseUser(user || null);
     });
 
     fetchAllExamsFromDb()
@@ -285,6 +326,16 @@ export default function App() {
     setExams((prev) => [newExam, ...prev]);
   };
 
+  // PRE-ENTRY AUTHENTICATION GATE: Show Login Page before getting into the main page
+  if (!isAuthenticated) {
+    return (
+      <LoginPortalView
+        onLoginSuccess={handlePortalLogin}
+        cachedFirebaseUser={cachedFirebaseUser}
+      />
+    );
+  }
+
   // IF ACTIVE EXAMINATION IS RUNNING -> RENDER DISTRACTION-FREE EXAM SCREEN
   if (activeExam && activeSession) {
     return (
@@ -329,6 +380,7 @@ export default function App() {
         onOpenRules={() => setIsRulesModalOpen(true)}
         currentUser={currentUser}
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
+        onSignOut={handleSignOut}
         isAdminVerified={isAdminVerified}
         onRequireAdminAuth={() => setIsAdminAuthModalOpen(true)}
         onOpenAddQuestionModal={() => {
@@ -378,6 +430,7 @@ export default function App() {
             <DashboardView
               exams={exams}
               searchQuery={searchQuery}
+              currentUser={currentUser}
               onStartExam={handleStartExam}
               onViewResults={(exam) => setSelectedResultExam(exam)}
               onOpenRules={() => setIsRulesModalOpen(true)}
@@ -390,14 +443,14 @@ export default function App() {
               <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs flex items-center justify-between">
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                    Academic Gradebook & Transcripts
+                    Results
                   </h2>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Official records of evaluated assessment papers and instructor remarks.
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Completed exams and grades.
                   </p>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs text-slate-500 block">Overall Standing</span>
+                  <span className="text-xs text-slate-500 block">Overall</span>
                   <span className="text-lg font-bold text-blue-700 font-mono">
                     Grade A (91.0%)
                   </span>
@@ -467,10 +520,10 @@ export default function App() {
             <div className="space-y-6">
               <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs">
                 <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                  Academic Assessment Timetable (Michaelmas 2026)
+                  Exam Schedule
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  Synchronized with the Oxford Registrar assessment database.
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Upcoming and completed exam dates.
                 </p>
               </div>
 

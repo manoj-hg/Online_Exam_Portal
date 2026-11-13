@@ -34,17 +34,12 @@ export const SubmitConfirmModal: React.FC<SubmitConfirmModalProps> = ({
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-100 flex items-start justify-between">
           <div>
-            <div className="flex items-center gap-2 text-xs text-blue-700 font-semibold mb-1">
-              <span className="font-mono bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                FINAL SUBMISSION
-              </span>
-              <span>{exam.code}</span>
-            </div>
+            <span className="text-xs font-mono text-blue-700 font-semibold">{exam.code}</span>
             <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-              Ready to submit your examination?
+              Submit Exam?
             </h3>
-            <p className="text-xs text-slate-500 mt-1">
-              Please review your response summary before final evaluation.
+            <p className="text-xs text-slate-500 mt-0.5">
+              Review your progress before submitting.
             </p>
           </div>
           <button
@@ -98,18 +93,13 @@ export const SubmitConfirmModal: React.FC<SubmitConfirmModalProps> = ({
 
           {/* Unanswered Notice Warning */}
           {unansweredCount > 0 && (
-            <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 flex items-start gap-3">
+            <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200 flex items-start gap-2.5">
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-              <div className="text-xs text-amber-900 leading-relaxed">
-                <strong>Attention:</strong> You have {unansweredCount} unanswered questions remaining. Once submitted, questions cannot be revisited.
+              <div className="text-xs text-amber-900">
+                You have {unansweredCount} unanswered question{unansweredCount > 1 ? 's' : ''}. You can't edit answers after submitting.
               </div>
             </div>
           )}
-
-          {/* Institutional Integrity Attestation */}
-          <p className="text-xs text-slate-500 leading-relaxed">
-            By confirming submission, your responses are timestamped and cryptographically signed into the Oxford assessment database.
-          </p>
         </div>
 
         {/* Modal Actions */}
@@ -118,13 +108,13 @@ export const SubmitConfirmModal: React.FC<SubmitConfirmModalProps> = ({
             onClick={onClose}
             className="px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors"
           >
-            Return to Examination
+            Back to Exam
           </button>
           <button
             onClick={onConfirmSubmit}
             className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors focus:ring-2 focus:ring-blue-500/30"
           >
-            Confirm & Submit Final Responses
+            Submit Exam
           </button>
         </div>
       </div>

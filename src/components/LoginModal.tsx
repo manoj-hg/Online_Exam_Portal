@@ -78,13 +78,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-base font-bold text-white tracking-tight">ExamSphere Access</span>
-                <span className="text-[10px] bg-blue-500/30 text-blue-300 font-mono px-1.5 py-0.5 rounded border border-blue-400/30 font-semibold">
-                  RBAC Gate
-                </span>
+                <span className="text-base font-bold text-white tracking-tight">Switch Account</span>
               </div>
               <p className="text-xs text-slate-300 mt-0.5">
-                Authorized Academic Portal
+                ExamSphere Portal
               </p>
             </div>
           </div>
@@ -153,20 +150,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             </div>
           )}
 
-          {/* TAB 1: ADMIN LOGIN (admin@123 / admin@123) */}
+          {/* TAB 1: ADMIN LOGIN */}
           {activeTab === 'admin' && (
             <form onSubmit={handleAdminLogin} className="space-y-4">
-              <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 text-blue-950 text-xs leading-relaxed">
-                <div className="flex items-center gap-1.5 font-semibold text-blue-900 mb-1">
-                  <ShieldCheck className="w-4 h-4 text-blue-700" />
-                  <span>Admin Privilege Required:</span>
-                </div>
-                <span>Only verified administrators can <strong>add questions</strong> and <strong>view student performance</strong> records.</span>
-              </div>
+              <p className="text-xs text-slate-600">
+                Sign in with admin credentials to add questions and view student performance.
+              </p>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Admin Identifier
+                  Username
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -183,7 +176,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Admin Password
+                  Password
                 </label>
                 <div className="relative">
                   <KeyRound className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -200,7 +193,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
               <div className="flex items-center justify-between text-xs pt-1">
                 <span className="text-[11px] text-slate-400 font-mono">
-                  Default: <code className="text-slate-700 font-bold">admin@123</code> / <code className="text-slate-700 font-bold">admin@123</code>
+                  Demo: <code className="text-slate-700 font-bold">admin@123</code> / <code className="text-slate-700 font-bold">admin@123</code>
                 </span>
                 <button
                   type="button"
@@ -210,7 +203,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   }}
                   className="text-[11px] text-blue-600 hover:text-blue-700 font-medium underline cursor-pointer"
                 >
-                  Quick Fill
+                  Auto-fill
                 </button>
               </div>
 
@@ -219,7 +212,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer focus:ring-2 focus:ring-blue-500/30"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>Verify & Access Admin Console</span>
+                <span>Sign In as Admin</span>
               </button>
             </form>
           )}
@@ -227,9 +220,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           {/* TAB 2: CANDIDATE / STUDENT LOGIN */}
           {activeTab === 'candidate' && (
             <div className="space-y-4">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed">
-                <span>Candidates may take proctored examinations and review their personal grade sheets. Question authoring and peer records are restricted.</span>
-              </div>
+              <p className="text-xs text-slate-600">
+                Take assigned exams and view your results.
+              </p>
 
               <button
                 type="button"
@@ -242,14 +235,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      Enter as Candidate: Elena Vance
+                      Elena Vance
                     </span>
                     <span className="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-mono">
                       Student
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-0.5 font-mono">
-                    ID: CS-2024-8841 · Oxford Computing Faculty
+                    ID: CS-2024-8841
                   </p>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
@@ -283,18 +276,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                   />
                 </svg>
-                <span>{loading ? 'Authenticating...' : 'Sign In with Institutional Google SSO'}</span>
+                <span>{loading ? 'Signing in...' : 'Continue with Google'}</span>
               </button>
-              <p className="text-[11px] text-slate-400 text-center">
-                User token registered with Firebase Cloud Auth
-              </p>
             </div>
           )}
-        </div>
-
-        {/* Footer */}
-        <div className="p-3 bg-slate-50 border-t border-slate-100 text-center text-[11px] text-slate-400 font-mono">
-          Security Policy: Admin credentials <span className="font-semibold text-slate-600">admin@123</span> enforced
         </div>
       </div>
     </div>

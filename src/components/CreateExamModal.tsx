@@ -75,17 +75,11 @@ export const CreateExamModal: React.FC<CreateExamModalProps> = ({
       <div className="bg-white rounded-2xl max-w-xl w-full border border-slate-200 shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="p-6 border-b border-slate-100 flex items-start justify-between">
           <div>
-            <div className="flex items-center gap-2 text-xs text-blue-700 font-semibold mb-1">
-              <span className="font-mono bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                FACULTY TOOLS
-              </span>
-              <span>Curriculum Management</span>
-            </div>
             <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-              Schedule New Examination Paper
+              New Exam
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Publish a proctored examination paper to candidate dashboards.
+              Create and publish an exam to the student dashboard.
             </p>
           </div>
           <button
@@ -131,14 +125,14 @@ export const CreateExamModal: React.FC<CreateExamModalProps> = ({
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Examination Paper Title
+              Exam Title
             </label>
             <input
               type="text"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Parallel Computing & GPU Architectures"
+              placeholder="e.g. Parallel Computing"
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
             />
           </div>
@@ -189,16 +183,16 @@ export const CreateExamModal: React.FC<CreateExamModalProps> = ({
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Proctoring Security Level
+              Proctoring Mode
             </label>
             <select
               value={proctoringMode}
               onChange={(e) => setProctoringMode(e.target.value as any)}
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
             >
-              <option value="Strict Invigilation">Strict Invigilation (Webcam + Audio + Fullscreen Lock)</option>
+              <option value="Strict Invigilation">Strict (Webcam + Fullscreen)</option>
               <option value="Webcam & Screen Lock">Webcam & Screen Lock</option>
-              <option value="Standard Proctored">Standard Proctored (Honor Code)</option>
+              <option value="Standard Proctored">Standard</option>
             </select>
           </div>
 
@@ -214,7 +208,7 @@ export const CreateExamModal: React.FC<CreateExamModalProps> = ({
               type="submit"
               className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm"
             >
-              Publish Examination Paper
+              Publish Exam
             </button>
           </div>
         </form>

@@ -93,15 +93,14 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs text-blue-400 font-semibold mb-1">
               <span className="font-mono bg-blue-500/30 px-2 py-0.5 rounded border border-blue-400/30">
-                ADMIN CONSOLE
+                ADMIN
               </span>
-              <span>Author & Add Question</span>
             </div>
             <h3 className="text-lg font-bold text-white tracking-tight">
-              Add Question to Examination Paper
+              Add Question
             </h3>
             <p className="text-xs text-slate-300 mt-0.5">
-              Admin Privilege: Append validated assessment questions directly to Cloud Firestore.
+              Add a new MCQ or written question to an exam.
             </p>
           </div>
           <button
@@ -125,7 +124,7 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-semibold text-slate-700 mb-1">
-                Target Examination Paper:
+                Exam
               </label>
               <select
                 value={selectedExamId}
@@ -142,14 +141,14 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
 
             <div>
               <label className="block font-semibold text-slate-700 mb-1">
-                Curriculum Topic / Section:
+                Topic / Section
               </label>
               <input
                 type="text"
                 required
                 value={section}
                 onChange={(e) => setSection(e.target.value)}
-                placeholder="e.g. Dynamic Programming, Graph Theory"
+                placeholder="e.g. Dynamic Programming"
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:ring-2 focus:ring-blue-500/20"
               />
             </div>
@@ -159,23 +158,23 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block font-semibold text-slate-700 mb-1">
-                Question Format:
+                Question Type
               </label>
               <select
                 value={questionType}
                 onChange={(e) => setQuestionType(e.target.value as any)}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:ring-2 focus:ring-blue-500/20 font-medium"
               >
-                <option value="single_choice">Single Choice (4 Options - Auto Graded)</option>
-                <option value="code_snippet">Code Snippet Analysis (Auto Graded)</option>
-                <option value="multiple_choice">Multiple Choice (Auto Graded)</option>
-                <option value="descriptive">Descriptive Question (Examiner Graded Rubric)</option>
+                <option value="single_choice">Single Choice (MCQ)</option>
+                <option value="code_snippet">Code Analysis (MCQ)</option>
+                <option value="multiple_choice">Multiple Choice</option>
+                <option value="descriptive">Written / Descriptive</option>
               </select>
             </div>
 
             <div>
               <label className="block font-semibold text-slate-700 mb-1">
-                Point Value (Marks):
+                Marks
               </label>
               <input
                 type="number"
@@ -191,14 +190,14 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
           {/* Question Prompt */}
           <div>
             <label className="block font-semibold text-slate-700 mb-1">
-              Question Prompt Text:
+              Question
             </label>
             <textarea
               rows={3}
               required
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="State the formal mathematical, theoretical, or engineering question..."
+              placeholder="Enter the question..."
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:ring-2 focus:ring-blue-500/20 leading-relaxed"
             />
           </div>
@@ -224,21 +223,21 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
             <div className="space-y-3 p-4 bg-blue-50/60 border border-blue-200/70 rounded-xl">
               <div>
                 <label className="block font-semibold text-blue-950 mb-1">
-                  Official Model Answer & Grading Rubric (for Faculty Examiner Evaluation):
+                  Model Answer & Grading Rubric
                 </label>
                 <textarea
                   rows={4}
                   required
                   value={modelAnswer}
                   onChange={(e) => setModelAnswer(e.target.value)}
-                  placeholder="Outline the core proof steps, invariant conditions, and complexity metrics required for full marks..."
+                  placeholder="Key points required for full marks..."
                   className="w-full p-3 bg-white border border-blue-200 rounded-lg text-slate-900 text-xs focus:ring-2 focus:ring-blue-500/20 leading-relaxed"
                 />
               </div>
 
               <div>
                 <label className="block font-semibold text-blue-950 mb-1">
-                  Maximum Word Limit:
+                  Word Limit
                 </label>
                 <input
                   type="number"
@@ -251,14 +250,14 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
               </div>
             </div>
           ) : (
-            /* Options & Radio for Correct Answer (MCQ Questions) */
+            /* Options & Radio for Correct Answer */
             <div className="space-y-2 pt-2">
               <div className="flex items-center justify-between">
                 <label className="font-semibold text-slate-700">
-                  Answer Options (Select the radio of the correct answer):
+                  Options (pick the correct answer)
                 </label>
                 <span className="text-[11px] text-slate-400 font-mono">
-                  Correct: Option {String.fromCharCode(65 + correctOptionIdx)}
+                  Correct: {String.fromCharCode(65 + correctOptionIdx)}
                 </span>
               </div>
 
@@ -286,7 +285,7 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
                     required
                     value={opt}
                     onChange={(e) => handleOptionChange(i, e.target.value)}
-                    placeholder={`Option ${String.fromCharCode(65 + i)} text`}
+                    placeholder={`Option ${String.fromCharCode(65 + i)}`}
                     className="flex-1 bg-transparent border-0 focus:outline-none text-slate-900 font-medium text-xs"
                   />
                 </div>
@@ -294,16 +293,16 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
             </div>
           )}
 
-          {/* Faculty Explanation */}
+          {/* Explanation */}
           <div>
             <label className="block font-semibold text-slate-700 mb-1">
-              Faculty Explanation (Provided to candidates upon evaluation):
+              Answer Explanation (optional)
             </label>
             <textarea
               rows={2}
               value={explanation}
               onChange={(e) => setExplanation(e.target.value)}
-              placeholder="Explain the theoretical derivation or reference theorem..."
+              placeholder="Brief explanation shown after grading..."
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
@@ -322,7 +321,7 @@ export const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
               className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm cursor-pointer flex items-center gap-1.5"
             >
               <PlusCircle className="w-3.5 h-3.5" />
-              <span>Save & Publish Question</span>
+              <span>Save Question</span>
             </button>
           </div>
         </form>

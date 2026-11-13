@@ -72,17 +72,14 @@ export const ExamResultsModal: React.FC<ExamResultsModalProps> = ({
         {/* Header */}
         <div className="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/80">
           <div>
-            <div className="flex items-center gap-2 text-xs text-blue-700 font-semibold mb-1">
-              <span className="font-mono bg-blue-100/70 px-2 py-0.5 rounded border border-blue-200">
-                OFFICIAL REPORT
-              </span>
-              <span>Oxford Collegiate Board</span>
-            </div>
+            <span className="text-xs font-mono text-blue-700 font-semibold">
+              {exam.code}
+            </span>
             <h3 className="text-xl font-bold text-slate-900 tracking-tight">
-              {exam.code}: Examination Performance Evaluation
+              Exam Results
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Candidate: <strong>Elena Vance</strong> (CS-2024-8841) · Instructor: {exam.instructor}
+              {exam.title} · {exam.instructor}
             </p>
           </div>
           <button
@@ -103,7 +100,7 @@ export const ExamResultsModal: React.FC<ExamResultsModalProps> = ({
               </div>
               <div>
                 <p className="text-xs text-slate-400 uppercase tracking-wider font-medium">
-                  Verified Result
+                  Final Score
                 </p>
                 <div className="flex items-baseline gap-2 mt-0.5">
                   <span className="text-3xl font-extrabold font-mono tabular-nums text-white">
@@ -124,14 +121,14 @@ export const ExamResultsModal: React.FC<ExamResultsModalProps> = ({
                 </span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[10px]">PASS CRITERIA</span>
+                <span className="text-slate-400 block text-[10px]">PASS MARK</span>
                 <span className="text-sm font-bold text-emerald-400">
-                  {exam.passingScore}% Pass
+                  {exam.passingScore}%
                 </span>
               </div>
               <div>
                 <span className="text-slate-400 block text-[10px]">STATUS</span>
-                <span className="text-sm font-bold text-blue-400">Registered</span>
+                <span className="text-sm font-bold text-blue-400">Saved</span>
               </div>
             </div>
           </div>
@@ -139,7 +136,7 @@ export const ExamResultsModal: React.FC<ExamResultsModalProps> = ({
           {/* Question-by-Question Detailed Review */}
           <div>
             <h4 className="text-sm font-bold text-slate-900 tracking-tight mb-3">
-              Question-by-Question Item Analysis
+              Answer Review
             </h4>
 
             {exam.questions.length === 0 ? (
@@ -275,15 +272,12 @@ export const ExamResultsModal: React.FC<ExamResultsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-[11px] text-slate-400 font-mono">
-            Oxford Registry Ref: OX-EXAM-2026-CS301-8841
-          </span>
+        <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
           <button
             onClick={onClose}
             className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium transition-colors"
           >
-            Dismiss Report
+            Close
           </button>
         </div>
       </div>

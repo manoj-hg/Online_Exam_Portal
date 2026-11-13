@@ -4,14 +4,9 @@ import {
   Clock,
   BookOpen,
   Award,
-  ShieldAlert,
   CheckCircle2,
-  AlertTriangle,
-  Wifi,
-  Video,
   FileText,
-  ArrowRight,
-  Database
+  ArrowRight
 } from 'lucide-react';
 import { Exam } from '../types/exam';
 
@@ -43,22 +38,17 @@ export const ExamInstructionsModal: React.FC<ExamInstructionsModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-      <div className="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[92vh]">
-        {/* Deep Navy Header */}
-        <div className="p-6 border-b border-slate-800 bg-[#0B132B] text-white flex items-start justify-between shrink-0">
+      <div className="bg-white rounded-2xl max-w-xl w-full border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        {/* Header */}
+        <div className="p-5 sm:p-6 border-b border-slate-800 bg-[#0B132B] text-white flex items-start justify-between shrink-0">
           <div>
-            <div className="flex items-center gap-2 text-xs text-blue-400 font-semibold mb-1">
-              <span className="font-mono bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-400/30">
-                {exam.code}
-              </span>
-              <span>{exam.department}</span>
-            </div>
-            <h3 className="text-lg font-bold text-white tracking-tight">
+            <span className="font-mono text-xs text-blue-400 font-semibold">
+              {exam.code} · {exam.department}
+            </span>
+            <h3 className="text-lg font-bold text-white tracking-tight mt-0.5">
               {exam.title}
             </h3>
-            <p className="text-xs text-slate-300 mt-1">
-              Course Examiner: <strong className="text-slate-100">{exam.instructor}</strong> ({exam.instructorRole})
-            </p>
+            <p className="text-xs text-slate-300 mt-1">{exam.instructor}</p>
           </div>
           <button
             onClick={onClose}
@@ -68,145 +58,92 @@ export const ExamInstructionsModal: React.FC<ExamInstructionsModalProps> = ({
           </button>
         </div>
 
-        {/* Modal Scrollable Body */}
-        <div className="p-6 space-y-5 overflow-y-auto flex-1 text-xs text-slate-700">
-          {/* Examination Details (Retrieved from Database) */}
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <Database className="w-3.5 h-3.5 text-blue-600" />
-              <span>Examination Specifications & Parameters</span>
-            </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-white p-2.5 rounded-lg border border-slate-200/80">
-                <span className="text-[11px] text-slate-500 block">Session Duration</span>
-                <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
-                  <Clock className="w-3.5 h-3.5 text-blue-600" />
-                  {exam.durationMinutes} Minutes
-                </span>
-              </div>
-
-              <div className="bg-white p-2.5 rounded-lg border border-slate-200/80">
-                <span className="text-[11px] text-slate-500 block">Total Marks</span>
-                <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
-                  <Award className="w-3.5 h-3.5 text-blue-600" />
-                  {exam.totalMarks} Points
-                </span>
-              </div>
-
-              <div className="bg-white p-2.5 rounded-lg border border-slate-200/80">
-                <span className="text-[11px] text-slate-500 block">Objective Questions</span>
-                <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
-                  <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-                  {mcqCount} MCQs
-                </span>
-              </div>
-
-              <div className="bg-white p-2.5 rounded-lg border border-slate-200/80">
-                <span className="text-[11px] text-slate-500 block">Descriptive Section</span>
-                <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
-                  <FileText className="w-3.5 h-3.5 text-indigo-600" />
-                  {descriptiveCount} Written
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Official Instructions */}
-          <div>
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
-              Mandatory Examination Instructions
-            </h4>
-            <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-2">
-              {exam.instructions.map((inst, i) => (
-                <div key={i} className="flex items-start gap-2 text-slate-700 leading-relaxed">
-                  <div className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                    {i + 1}
-                  </div>
-                  <span>{inst}</span>
-                </div>
-              ))}
-              <div className="flex items-start gap-2 text-slate-700 leading-relaxed">
-                <div className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                  {exam.instructions.length + 1}
-                </div>
-                <span>
-                  <strong>Continuous Auto-Save:</strong> Your answers are saved automatically into the database. If connectivity drops, answers remain safe locally and synchronize once restored.
-                </span>
-              </div>
-              <div className="flex items-start gap-2 text-slate-700 leading-relaxed">
-                <div className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                  {exam.instructions.length + 2}
-                </div>
-                <span>
-                  <strong>Timed Automatic Submission:</strong> When the countdown reaches 0:00, all current answers are automatically validated and submitted to the examiner.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Pre-Flight System Verification Checklist */}
-          <div>
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
-              System Pre-Flight Readiness Check
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <div>
-                  <span className="font-semibold text-emerald-950 block">Cloud Database</span>
-                  <span className="text-[11px] text-emerald-700">Firestore Connected</span>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <div>
-                  <span className="font-semibold text-emerald-950 block">Local Storage</span>
-                  <span className="text-[11px] text-emerald-700">Offline Fallback Ready</span>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <div>
-                  <span className="font-semibold text-emerald-950 block">Invigilation Feed</span>
-                  <span className="text-[11px] text-emerald-700">{exam.proctoringMode}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Academic Honor Code Pledge */}
-          <div className="pt-2">
-            <label className="flex items-start gap-3 p-3.5 bg-blue-50/60 border border-blue-200/80 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors">
-              <input
-                type="checkbox"
-                checked={hasAgreed}
-                onChange={(e) => setHasAgreed(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span className="text-slate-800 text-xs leading-relaxed">
-                I solemnly confirm that I am the authorized candidate, that I have read and understood all examination rules, and that I agree to abide by the university disciplinary code.
+        {/* Body */}
+        <div className="p-5 sm:p-6 space-y-5 overflow-y-auto flex-1 text-xs text-slate-700">
+          {/* Quick Specs */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200/80">
+              <span className="text-[11px] text-slate-500 block">Duration</span>
+              <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
+                <Clock className="w-3.5 h-3.5 text-blue-600" />
+                {exam.durationMinutes} min
               </span>
-            </label>
+            </div>
+
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200/80">
+              <span className="text-[11px] text-slate-500 block">Total Marks</span>
+              <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
+                <Award className="w-3.5 h-3.5 text-blue-600" />
+                {exam.totalMarks} pts
+              </span>
+            </div>
+
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200/80">
+              <span className="text-[11px] text-slate-500 block">MCQs</span>
+              <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
+                <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+                {mcqCount}
+              </span>
+            </div>
+
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200/80">
+              <span className="text-[11px] text-slate-500 block">Written</span>
+              <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1 mt-0.5">
+                <FileText className="w-3.5 h-3.5 text-indigo-600" />
+                {descriptiveCount}
+              </span>
+            </div>
           </div>
+
+          {/* Concise Instructions */}
+          <div>
+            <h4 className="text-xs font-bold text-slate-900 mb-2">
+              Exam Instructions
+            </h4>
+            <ul className="space-y-1.5 text-slate-600 list-disc list-inside leading-relaxed">
+              {exam.instructions.slice(0, 2).map((inst, i) => (
+                <li key={i}>{inst}</li>
+              ))}
+              <li>Answers auto-save continuously and recover if your connection drops.</li>
+              <li>Your exam submits automatically when the timer expires.</li>
+            </ul>
+          </div>
+
+          {/* Readiness Check */}
+          <div className="flex items-center gap-2 text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3.5 py-2.5">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span className="font-medium">System ready · {exam.proctoringMode}</span>
+          </div>
+
+          {/* Consent Checkbox */}
+          <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100/70 transition-colors">
+            <input
+              type="checkbox"
+              checked={hasAgreed}
+              onChange={(e) => setHasAgreed(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+            />
+            <span className="text-slate-700 text-xs leading-relaxed">
+              I have read the instructions and agree to complete this exam independently.
+            </span>
+          </label>
         </div>
 
-        {/* Footer Actions */}
-        <div className="p-4 md:px-6 bg-slate-50 border-t border-slate-200/80 flex items-center justify-between shrink-0">
+        {/* Footer */}
+        <div className="p-4 sm:px-6 bg-slate-50 border-t border-slate-200/80 flex items-center justify-between shrink-0">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-medium text-slate-700 hover:text-slate-900 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors"
+            className="px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
           >
-            Cancel & Return
+            Cancel
           </button>
 
           <button
             disabled={!hasAgreed}
             onClick={handleStart}
-            className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg text-xs font-semibold shadow-sm transition-colors flex items-center gap-2 focus:ring-2 focus:ring-blue-500/30 cursor-pointer"
+            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <span>Start Examination</span>
+            <span>Start Exam</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

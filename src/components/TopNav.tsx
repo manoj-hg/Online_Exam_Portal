@@ -63,7 +63,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search examinations, course codes (e.g. CS-301), instructors..."
+            placeholder="Search exams or course codes..."
             className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
           />
           {searchQuery && (
@@ -77,13 +77,11 @@ export const TopNav: React.FC<TopNavProps> = ({
         </div>
       </div>
 
-      {/* Zone 2: Institution Status */}
+      {/* Zone 2: Term Info */}
       <div className="hidden lg:flex items-center gap-2 text-xs text-slate-500">
-        <span className="font-medium text-slate-700">Michaelmas Term 2026</span>
+        <span className="font-medium text-slate-700">Fall 2026</span>
         <span aria-hidden="true">·</span>
-        <span className="font-mono text-slate-600">Session UTC 12:00</span>
-        <span aria-hidden="true">·</span>
-        <span className="text-emerald-700 font-medium">Network Secure</span>
+        <span className="text-emerald-700 font-medium">Online</span>
       </div>
 
       {/* Zone 3: Actions & Notifications */}
@@ -151,7 +149,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={onOpenQuickDemo}
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 whitespace-nowrap cursor-pointer"
           >
-            Launch CS-301 Exam
+            Start CS-301
           </button>
         ) : (
           <div className="flex items-center gap-2">
@@ -180,7 +178,7 @@ export const TopNav: React.FC<TopNavProps> = ({
               }}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 whitespace-nowrap cursor-pointer"
             >
-              + Schedule Paper
+              + New Exam
             </button>
           </div>
         )}

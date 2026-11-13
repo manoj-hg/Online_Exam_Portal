@@ -50,6 +50,7 @@ export const ExamActiveView: React.FC<ExamActiveViewProps> = ({
   const [showNotesDrawer, setShowNotesDrawer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(session.timeRemainingSeconds);
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+  const [proctorPingSent, setProctorPingSent] = useState<boolean>(false);
   const [lastSavedTime, setLastSavedTime] = useState<string>(() =>
     new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
   );
@@ -301,40 +302,28 @@ export const ExamActiveView: React.FC<ExamActiveViewProps> = ({
               </div>
             )}
 
-            {/* DESCRIPTIVE QUESTION RESPONSE WORKSPACE (Activity Diagram: Answer Descriptive Questions) */}
+            {/* DESCRIPTIVE QUESTION RESPONSE WORKSPACE */}
             {currentQuestion?.type === 'descriptive' ? (
               <div className="space-y-4 pt-1">
-                {/* Rubric and Examiner Guidance Banner */}
-                <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-4 text-xs text-slate-700">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-semibold text-blue-900 flex items-center gap-1.5">
-                      <FileText className="w-4 h-4 text-blue-700" />
-                      <span>Examiner Evaluation Rubric</span>
-                    </span>
-                    <span className="text-[11px] font-mono text-blue-700 font-medium">
-                      Graded by Faculty / Examiner
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed">
-                    Provide a well-structured technical response. State invariants, algorithm steps, and time/space complexities. Your response will be reviewed by the faculty examiner during post-exam grading.
-                  </p>
+                <div className="bg-blue-50/70 border border-blue-200/80 rounded-lg px-3.5 py-2.5 text-xs text-slate-700 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 font-medium text-blue-900">
+                    <FileText className="w-3.5 h-3.5 text-blue-700" />
+                    <span>Include algorithm steps, invariants, and complexity analysis.</span>
+                  </span>
+                  <span className="text-[11px] font-mono text-blue-700">Faculty Graded</span>
                 </div>
 
                 {/* Candidate Essay / Descriptive Text Area */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-500">
                     <label className="font-semibold text-slate-800">
-                      Your Written Solution / Technical Response:
+                      Your Written Answer
                     </label>
                     <div className="flex items-center gap-3 font-mono text-[11px]">
                       <span>
                         Words: <strong className="text-slate-800">
                           {((session.descriptiveAnswers?.[currentQuestion.id] || '').trim().split(/\s+/).filter(Boolean).length)}
-                        </strong> / {currentQuestion.maxWords || 350} Max
-                      </span>
-                      <span>·</span>
-                      <span>
-                        Chars: {(session.descriptiveAnswers?.[currentQuestion.id] || '').length}
+                        </strong> / {currentQuestion.maxWords || 350}
                       </span>
                     </div>
                   </div>
@@ -350,19 +339,18 @@ export const ExamActiveView: React.FC<ExamActiveViewProps> = ({
                         setLastSavedTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
                       }, 500);
                     }}
-                    placeholder="Type your structured academic response here. Reference mathematical invariants, algorithmic complexities, and design trade-offs where applicable..."
+                    placeholder="Write your solution here..."
                     className="w-full p-4 bg-slate-50/70 border border-slate-200 rounded-xl text-slate-900 text-xs md:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white leading-relaxed resize-y transition-colors"
                   />
                 </div>
 
-                {/* Auto-Save & Sync Assurance Banner */}
-                <div className="flex items-center justify-between text-[11px] text-slate-500 bg-slate-50 px-3 py-2 rounded-lg border border-slate-200/80">
+                <div className="flex items-center justify-between text-[11px] text-slate-500">
                   <span className="flex items-center gap-1.5">
                     <Database className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Swimlane 2: Draft autosaved continuously to avoid data loss</span>
+                    <span>Auto-save enabled</span>
                   </span>
                   <span className="font-mono text-slate-600">
-                    {isOnline ? `Cloud Synced (${lastSavedTime})` : 'Offline Cached Locally'}
+                    {isOnline ? `Saved ${lastSavedTime}` : 'Saved locally (offline)'}
                   </span>
                 </div>
               </div>
@@ -625,16 +613,22 @@ export const ExamActiveView: React.FC<ExamActiveViewProps> = ({
 
           {/* Emergency Proctor Contact / Assistance */}
           <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center">
-            <p className="text-[11px] text-slate-500">
-              Technical issues or test anomalies?
-            </p>
-            <button
-              onClick={() => alert('Invigilator notified. A proctor has received your attention ping.')}
-              className="mt-1 text-xs text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1"
-            >
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>Ping Invigilator Support</span>
-            </button>
+            {proctorPingSent ? (
+              <span className="text-xs text-emerald-700 font-medium">
+                Invigilator notified
+              </span>
+            ) : (
+              <button
+                onClick={() => {
+                  setProctorPingSent(true);
+                  setTimeout(() => setProctorPingSent(false), 4000);
+                }}
+                className="text-xs text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1 cursor-pointer"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                <span>Need Help? Notify Proctor</span>
+              </button>
+            )}
           </div>
         </aside>
       </div>

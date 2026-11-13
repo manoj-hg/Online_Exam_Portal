@@ -24,6 +24,7 @@ interface SidebarProps {
   onOpenRules: () => void;
   currentUser?: any;
   onOpenLoginModal: () => void;
+  onSignOut?: () => void;
   isAdminVerified: boolean;
   onRequireAdminAuth: () => void;
   onOpenAddQuestionModal?: () => void;
@@ -37,24 +38,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenRules,
   currentUser,
   onOpenLoginModal,
+  onSignOut,
   isAdminVerified,
   onRequireAdminAuth,
   onOpenAddQuestionModal
 }) => {
   const studentNavItems = [
-    { id: 'dashboard', label: 'Examinations Dashboard', icon: LayoutDashboard },
-    { id: 'active_exams', label: 'My Examination Queue', icon: FileText },
-    { id: 'results', label: 'Gradebook & Feedback', icon: Award },
-    { id: 'schedule', label: 'Academic Timetable', icon: Calendar },
-    { id: 'auth_db', label: 'Cloud Auth & Database', icon: Database },
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'active_exams', label: 'My Exams', icon: FileText },
+    { id: 'results', label: 'Results', icon: Award },
+    { id: 'schedule', label: 'Schedule', icon: Calendar },
+    { id: 'auth_db', label: 'Cloud Sync', icon: Database },
   ];
 
   const facultyNavItems = [
-    { id: 'dashboard', label: 'Course Examinations', icon: LayoutDashboard },
-    { id: 'proctor', label: 'Live Invigilation Room', icon: ShieldCheck },
-    { id: 'students', label: 'Candidate Roster & Performance', icon: Users },
-    { id: 'results', label: 'Grading & Analytics', icon: Award },
-    { id: 'auth_db', label: 'Cloud Auth & Database', icon: Database },
+    { id: 'dashboard', label: 'Exams', icon: LayoutDashboard },
+    { id: 'proctor', label: 'Live Proctoring', icon: ShieldCheck },
+    { id: 'students', label: 'Students', icon: Users },
+    { id: 'results', label: 'Grading', icon: Award },
+    { id: 'auth_db', label: 'Cloud Sync', icon: Database },
   ];
 
   const navItems = userRole === 'student' ? studentNavItems : facultyNavItems;
@@ -80,12 +82,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className="text-base font-bold text-white tracking-tight">ExamSphere</span>
             </div>
             <p className="text-[11px] text-slate-400 tracking-wide font-normal">
-              Collegiate Assessment Portal
+              Online Exam Portal
             </p>
           </div>
         </div>
 
-        {/* Role Switcher Pill Bar (Segmented Control) */}
+        {/* Role Switcher Pill Bar */}
         <div className="px-5 pt-4 pb-2">
           <div className="p-1 bg-[#152042] rounded-lg border border-slate-700/60 flex items-center">
             <button
@@ -96,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              Candidate
+              Student
             </button>
             <button
               onClick={handleSwitchToFaculty}
@@ -105,14 +107,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
-              title={isAdminVerified ? 'Admin / Faculty Mode' : 'Admin Credentials Required (admin@123)'}
+              title={isAdminVerified ? 'Admin / Faculty Mode' : 'Admin Login Required (admin@123)'}
             >
-              Admin / Faculty
+              Admin
             </button>
           </div>
           {userRole === 'faculty' && isAdminVerified && (
             <span className="text-[10px] text-emerald-400 font-mono block text-center mt-1">
-              ✓ Verified Admin (admin@123)
+              ✓ Admin Verified
             </span>
           )}
         </div>
@@ -120,7 +122,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Navigation Items */}
         <nav className="p-3 space-y-1">
           <div className="px-3 py-2 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
-            {userRole === 'student' ? 'Student Workspace' : 'Invigilator Console'}
+            {userRole === 'student' ? 'Menu' : 'Admin Menu'}
           </div>
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -147,12 +149,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className="w-full mt-2 flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold bg-blue-600/30 text-blue-300 border border-blue-500/40 hover:bg-blue-600/40 hover:text-white transition-colors text-left cursor-pointer"
             >
               <PlusCircle className="w-4 h-4 text-blue-400 shrink-0" />
-              <span className="truncate">+ Add Question to Paper</span>
+              <span className="truncate">Add Question</span>
             </button>
           )}
 
           <div className="pt-4 px-3 py-2 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
-            Institutional Resources
+            Resources
           </div>
 
           <button
@@ -164,7 +166,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }`}
           >
             <Network className={`w-4 h-4 shrink-0 ${currentTab === 'diagrams' ? 'text-blue-400' : 'text-slate-400'}`} />
-            <span className="truncate">System UML & Architecture</span>
+            <span className="truncate">Use Case Diagram</span>
           </button>
 
           <button
@@ -172,7 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             className="w-full flex items-center gap-3 px-3.5 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#152042] hover:text-white transition-colors text-left"
           >
             <BookOpen className="w-4 h-4 text-slate-400 shrink-0" />
-            <span className="truncate">Examination Regulations</span>
+            <span className="truncate">Exam Instructions</span>
           </button>
         </nav>
       </div>
@@ -200,7 +202,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px]">
-          <span className="text-slate-400 font-mono truncate">Firestore Cloud</span>
           <button
             onClick={onOpenLoginModal}
             className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 cursor-pointer"
@@ -208,6 +209,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <LogIn className="w-3 h-3" />
             <span>Switch</span>
           </button>
+          {onSignOut && (
+            <button
+              onClick={onSignOut}
+              className="text-slate-400 hover:text-rose-300 font-medium flex items-center gap-1 cursor-pointer transition-colors"
+            >
+              <LogOut className="w-3 h-3" />
+              <span>Sign Out</span>
+            </button>
+          )}
         </div>
       </div>
     </aside>

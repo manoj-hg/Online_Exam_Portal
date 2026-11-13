@@ -285,23 +285,23 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Institutional Header Banner */}
+      {/* Header Banner */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs text-blue-700 font-semibold mb-1">
             <span className="font-mono bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-              FACULTY & ADMINISTRATOR CONSOLE
+              FACULTY & ADMIN
             </span>
             <span className="text-emerald-700 font-mono text-[11px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
               <ShieldCheck className="w-3 h-3 text-emerald-600" />
-              Verified (admin@123)
+              Verified
             </span>
           </div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight">
-            Academic Examination Operations & Governance
+            Faculty & Admin Console
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Admin/Examiner: <strong className="text-slate-700">admin@123 (Prof. Arthur Vance)</strong> · Privileges: <span className="font-semibold text-blue-700">Question Authoring</span>, <span className="font-semibold text-indigo-700">Descriptive Grading</span>, & <span className="font-semibold text-slate-700">User Management</span>
+            Monitor live exams, grade written answers, and manage users.
           </p>
         </div>
 
@@ -311,18 +311,18 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               onClick={onOpenAddQuestionModal}
               className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer"
             >
-              <span>+ Add Question to Exam</span>
+              <span>+ Add Question</span>
             </button>
           )}
 
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-medium text-emerald-800">
             <Radio className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-            <span>Room Live (30fps)</span>
+            <span>Live</span>
           </div>
         </div>
       </div>
 
-      {/* Main Feature Navigation (UML Actor Flows: Live Invigilation vs Submissions & Grading vs Admin Management) */}
+      {/* Main Feature Navigation */}
       <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80 text-xs font-medium">
         <button
           onClick={() => setActiveConsoleTab('proctor')}
@@ -333,7 +333,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           }`}
         >
           <Video className="w-3.5 h-3.5 text-blue-600" />
-          <span>Live Proctoring & Telemetry</span>
+          <span>Live Proctoring</span>
           <span className="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">
             {activeCandidates} Active
           </span>
@@ -348,9 +348,9 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           }`}
         >
           <Award className="w-3.5 h-3.5 text-indigo-600" />
-          <span>Submissions & Descriptive Grading</span>
+          <span>Grading & Results</span>
           <span className="font-mono text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded border border-indigo-200">
-            {submissions.filter((s) => !s.descriptiveGraded).length} Pending Review
+            {submissions.filter((s) => !s.descriptiveGraded).length} Pending
           </span>
         </button>
 
@@ -363,62 +363,57 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           }`}
         >
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Administrator Dashboard</span>
-          <span className="font-mono text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200">
-            admin@123
-          </span>
+          <span>Admin Management</span>
         </button>
       </div>
 
-      {/* ======================================================== */}
-      {/* TAB 1: LIVE PROCTORING & INVIGILATION TELEMETRY */}
-      {/* ======================================================== */}
+      {/* TAB 1: LIVE PROCTORING */}
       {activeConsoleTab === 'proctor' && (
         <div className="space-y-6 animate-in fade-in duration-150">
           {/* Proctor Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-              <span className="text-xs text-slate-500">Active Test-Takers</span>
+              <span className="text-xs text-slate-500">Active Students</span>
               <div className="flex items-baseline gap-2 mt-1">
                 <span className="text-2xl font-bold text-slate-900 font-mono tabular-nums">
                   {activeCandidates}
                 </span>
-                <span className="text-xs text-slate-500">In Examination</span>
+                <span className="text-xs text-slate-500">In Exam</span>
               </div>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-              <span className="text-xs text-slate-500">Integrity Alerts</span>
+              <span className="text-xs text-slate-500">Alerts</span>
               <div className="flex items-baseline gap-2 mt-1">
                 <span className="text-2xl font-bold text-amber-700 font-mono tabular-nums">
                   {flaggedCandidates}
                 </span>
-                <span className="text-xs text-amber-700 font-medium">Requires Review</span>
+                <span className="text-xs text-amber-700 font-medium">Needs Review</span>
               </div>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-              <span className="text-xs text-slate-500">Final Submissions</span>
+              <span className="text-xs text-slate-500">Submitted</span>
               <div className="flex items-baseline gap-2 mt-1">
                 <span className="text-2xl font-bold text-emerald-700 font-mono tabular-nums">
                   {submittedCandidates}
                 </span>
-                <span className="text-xs text-emerald-700 font-medium">Verified & Graded</span>
+                <span className="text-xs text-emerald-700 font-medium">Completed</span>
               </div>
             </div>
           </div>
 
-          {/* Broadcast Message to Candidates */}
+          {/* Broadcast Message */}
           <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold text-slate-900 flex items-center gap-1.5">
                 <Radio className="w-3.5 h-3.5 text-blue-600" />
-                <span>Broadcast Notice to All Active Candidates</span>
+                <span>Send Notice to All Active Students</span>
               </span>
               {announcementSent && (
                 <span className="text-xs font-medium text-emerald-600 flex items-center gap-1">
                   <CheckCircle className="w-3.5 h-3.5" />
-                  <span>Broadcast dispatched to all screens</span>
+                  <span>Sent</span>
                 </span>
               )}
             </div>
@@ -427,7 +422,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 type="text"
                 value={announcementText}
                 onChange={(e) => setAnnouncementText(e.target.value)}
-                placeholder="e.g. Please note: Question 4 has a typo in option C; option C denotes index 5..."
+                placeholder="Type an announcement for active students..."
                 className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               />
               <button
@@ -435,7 +430,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition-colors shadow-sm flex items-center gap-1.5 shrink-0"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>Transmit Notice</span>
+                <span>Send</span>
               </button>
             </form>
           </div>
@@ -444,22 +439,22 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           <div className="bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                Connected Candidate Feeds ({sessions.length})
+                Student Sessions ({sessions.length})
               </h3>
-              <span className="text-xs text-slate-500">Live Telemetry Refresh: 5s</span>
+              <span className="text-xs text-slate-500">Live Status</span>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-50 text-slate-500 border-b border-slate-200">
                   <tr>
-                    <th className="py-3 px-4 font-semibold">Candidate</th>
-                    <th className="py-3 px-4 font-semibold">Candidate ID</th>
+                    <th className="py-3 px-4 font-semibold">Student</th>
+                    <th className="py-3 px-4 font-semibold">ID</th>
                     <th className="py-3 px-4 font-semibold">Progress</th>
-                    <th className="py-3 px-4 font-semibold">Time Remaining</th>
-                    <th className="py-3 px-4 font-semibold">Integrity State</th>
-                    <th className="py-3 px-4 font-semibold">Latest Action</th>
-                    <th className="py-3 px-4 font-semibold text-right">Invigilator Actions</th>
+                    <th className="py-3 px-4 font-semibold">Time Left</th>
+                    <th className="py-3 px-4 font-semibold">Status</th>
+                    <th className="py-3 px-4 font-semibold">Last Activity</th>
+                    <th className="py-3 px-4 font-semibold text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -497,19 +492,19 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                         {st.status === 'active' && (
                           <span className="inline-flex items-center gap-1 text-emerald-700 font-medium">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            Nominal
+                            Active
                           </span>
                         )}
                         {st.status === 'warning' && (
                           <span className="inline-flex items-center gap-1 text-amber-700 font-medium">
                             <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
-                            Tab Diverted
+                            Tab Switch
                           </span>
                         )}
                         {st.status === 'submitted' && (
                           <span className="inline-flex items-center gap-1 text-blue-700 font-medium">
                             <CheckCircle className="w-3.5 h-3.5 text-blue-600" />
-                            Turned In
+                            Submitted
                           </span>
                         )}
                       </td>
@@ -522,14 +517,14 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                             onClick={() => handleExtendStudentTime(st.studentId)}
                             className="px-2.5 py-1 text-[11px] font-medium text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded transition-colors cursor-pointer"
                           >
-                            +10m Extra
+                            +10m
                           </button>
                         )}
                         <button
                           onClick={() => setSelectedStudent(st)}
                           className="px-2.5 py-1 text-[11px] font-medium text-blue-600 hover:text-blue-700 bg-blue-50 rounded transition-colors cursor-pointer"
                         >
-                          Audit Feed
+                          Inspect
                         </button>
                       </td>
                     </tr>
@@ -541,42 +536,32 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
         </div>
       )}
 
-      {/* ======================================================== */}
-      {/* TAB 2: SUBMISSIONS & DESCRIPTIVE EVALUATION */}
-      {/* (Activity Diagram Swimlane 4: Review & Grade Descriptive Answers -> Calculate Final Marks -> Publish Results) */}
-      {/* ======================================================== */}
+      {/* TAB 2: SUBMISSIONS & GRADING */}
       {activeConsoleTab === 'submissions' && (
-        <div className="space-y-6 animate-in fade-in duration-150">
-          <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs">
-            <h3 className="text-sm font-bold text-slate-900 mb-1">
-              Candidate Submissions & Grading Pipeline
-            </h3>
-            <p className="text-xs text-slate-500">
-              Activity Diagram Workflow: Objective questions are automatically evaluated by the system. Descriptive synthesis questions require faculty examiner review, rubric marking, final grade calculation, and official publication.
-            </p>
-          </div>
-
+        <div className="space-y-5 animate-in fade-in duration-150">
           <div className="bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                Submitted Answer Sheets ({submissions.length})
-              </h4>
-              <span className="text-xs text-slate-500">
-                Evaluation Engine: Mixed Objective (System) + Descriptive (Faculty)
-              </span>
+            <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900">
+                  Submissions & Grading ({submissions.length})
+                </h3>
+                <p className="text-xs text-slate-500">
+                  MCQs are auto-graded. Review written answers below to grade and publish results.
+                </p>
+              </div>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-50 text-slate-500 border-b border-slate-200">
                   <tr>
-                    <th className="py-3 px-4 font-semibold">Candidate</th>
-                    <th className="py-3 px-4 font-semibold">Paper</th>
-                    <th className="py-3 px-4 font-semibold">Submitted At</th>
-                    <th className="py-3 px-4 font-semibold">MCQ Auto-Score</th>
-                    <th className="py-3 px-4 font-semibold">Descriptive Evaluation</th>
-                    <th className="py-3 px-4 font-semibold">Final Grade</th>
-                    <th className="py-3 px-4 font-semibold text-right">Examiner Action</th>
+                    <th className="py-3 px-4 font-semibold">Student</th>
+                    <th className="py-3 px-4 font-semibold">Exam</th>
+                    <th className="py-3 px-4 font-semibold">Submitted</th>
+                    <th className="py-3 px-4 font-semibold">MCQ Score</th>
+                    <th className="py-3 px-4 font-semibold">Written Answer</th>
+                    <th className="py-3 px-4 font-semibold">Final Score</th>
+                    <th className="py-3 px-4 font-semibold text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -596,18 +581,18 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                         <span className="font-mono font-semibold text-slate-900">
                           {sub.objectiveScore} / {sub.objectiveTotal}
                         </span>
-                        <span className="text-[10px] text-emerald-600 block">Auto-Evaluated</span>
+                        <span className="text-[10px] text-emerald-600 block">Auto-graded</span>
                       </td>
                       <td className="py-3 px-4">
                         {sub.descriptiveGraded ? (
                           <span className="inline-flex items-center gap-1 text-emerald-700 font-medium font-mono">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                            {sub.descriptiveScore} / {sub.descriptiveMax} Pts
+                            {sub.descriptiveScore} / {sub.descriptiveMax} pts
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 text-amber-700 font-medium bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                             <Clock className="w-3 h-3 text-amber-600" />
-                            Pending Faculty Review
+                            Needs Review
                           </span>
                         )}
                       </td>
@@ -615,14 +600,14 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                         {sub.isPublished ? (
                           <div className="flex items-center gap-1.5">
                             <span className="font-mono font-bold text-blue-700">
-                              {sub.finalScore} Pts ({sub.finalGrade})
+                              {sub.finalScore} pts ({sub.finalGrade})
                             </span>
                             <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
                               Published
                             </span>
                           </div>
                         ) : (
-                          <span className="text-slate-400 italic">Unpublished Draft</span>
+                          <span className="text-slate-400 italic">Draft</span>
                         )}
                       </td>
                       <td className="py-3 px-4 text-right space-x-2">
@@ -630,11 +615,11 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                           onClick={() => {
                             setGradingSubmission(sub);
                             setGradeInput(sub.descriptiveScore ?? 14);
-                            setExaminerNotesInput(sub.examinerNotes || 'Well-argued proof with clear invariant derivations.');
+                            setExaminerNotesInput(sub.examinerNotes || 'Well-argued proof.');
                           }}
                           className="px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold rounded-lg text-[11px] transition-colors cursor-pointer"
                         >
-                          {sub.descriptiveGraded ? 'Re-Grade' : 'Grade Descriptive'}
+                          {sub.descriptiveGraded ? 'Edit Grade' : 'Grade'}
                         </button>
 
                         {sub.descriptiveGraded && !sub.isPublished && (
@@ -642,7 +627,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                             onClick={() => handlePublishResults(sub.id)}
                             className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-[11px] shadow-xs transition-colors cursor-pointer"
                           >
-                            Publish Results
+                            Publish
                           </button>
                         )}
                       </td>
@@ -662,7 +647,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
       {activeConsoleTab === 'admin' && (
         <div className="space-y-6 animate-in fade-in duration-150">
           {/* Admin Subtabs */}
-          <div className="flex items-center gap-1 border-b border-slate-200 pb-2 text-xs font-semibold">
+          <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 pb-2 text-xs font-semibold">
             <button
               onClick={() => setAdminSubTab('students')}
               className={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
@@ -672,7 +657,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               }`}
             >
               <Users className="w-3.5 h-3.5" />
-              <span>Manage Students ({students.length})</span>
+              <span>Students ({students.length})</span>
             </button>
 
             <button
@@ -684,7 +669,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
-              <span>Manage Faculty ({faculty.length})</span>
+              <span>Faculty ({faculty.length})</span>
             </button>
 
             <button
@@ -696,7 +681,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               }`}
             >
               <Settings className="w-3.5 h-3.5" />
-              <span>User Roles & RBAC</span>
+              <span>Roles</span>
             </button>
 
             <button
@@ -708,7 +693,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
-              <span>Examination Activities Log</span>
+              <span>Activity Log</span>
             </button>
 
             <button
@@ -720,7 +705,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               }`}
             >
               <Database className="w-3.5 h-3.5" />
-              <span>System Statistics</span>
+              <span>Stats</span>
             </button>
           </div>
 
@@ -728,14 +713,9 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           {adminSubTab === 'students' && (
             <div className="bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden">
               <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                    Enrolled Student Roster
-                  </h4>
-                  <p className="text-[11px] text-slate-500">
-                    Administrator privilege: Provision credentials, assign cohorts, and monitor candidate status.
-                  </p>
-                </div>
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                  Students ({students.length})
+                </h4>
                 <button
                   onClick={() => setIsAddStudentOpen(true)}
                   className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer"
@@ -749,9 +729,9 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-50 text-slate-500 border-b border-slate-200">
                     <tr>
-                      <th className="py-3 px-4 font-semibold">Student ID</th>
-                      <th className="py-3 px-4 font-semibold">Full Name</th>
-                      <th className="py-3 px-4 font-semibold">University Email</th>
+                      <th className="py-3 px-4 font-semibold">ID</th>
+                      <th className="py-3 px-4 font-semibold">Name</th>
+                      <th className="py-3 px-4 font-semibold">Email</th>
                       <th className="py-3 px-4 font-semibold">Department</th>
                       <th className="py-3 px-4 font-semibold">Status</th>
                     </tr>
@@ -780,14 +760,9 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           {adminSubTab === 'faculty' && (
             <div className="bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden">
               <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                    Academic Faculty & Examiner Registry
-                  </h4>
-                  <p className="text-[11px] text-slate-500">
-                    Author examination papers, establish correct keys, and conduct descriptive appraisals.
-                  </p>
-                </div>
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                  Faculty ({faculty.length})
+                </h4>
                 <button
                   onClick={() => setIsAddFacultyOpen(true)}
                   className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer"
@@ -801,11 +776,11 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-50 text-slate-500 border-b border-slate-200">
                     <tr>
-                      <th className="py-3 px-4 font-semibold">Faculty ID</th>
-                      <th className="py-3 px-4 font-semibold">Examiner Name</th>
-                      <th className="py-3 px-4 font-semibold">Official Email</th>
+                      <th className="py-3 px-4 font-semibold">ID</th>
+                      <th className="py-3 px-4 font-semibold">Name</th>
+                      <th className="py-3 px-4 font-semibold">Email</th>
                       <th className="py-3 px-4 font-semibold">Department & Role</th>
-                      <th className="py-3 px-4 font-semibold">Specialization</th>
+                      <th className="py-3 px-4 font-semibold">Subject</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
@@ -827,42 +802,42 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           {/* SUBTAB: USER ROLES */}
           {adminSubTab === 'roles' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-3">
+              <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-2.5">
                 <div className="flex items-center gap-2 text-xs font-bold text-blue-700 uppercase">
                   <Users className="w-4 h-4" />
-                  <span>Role: Candidate / Student</span>
+                  <span>Student</span>
                 </div>
                 <p className="text-xs text-slate-600">
-                  Access examination papers, read instructions, answer MCQs & descriptive questions, view draft autosave status, submit, and inspect published transcripts.
+                  Take exams, auto-save answers, submit, and view published results.
                 </p>
                 <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-500 font-mono">
-                  Assigned Users: {students.length} Enrolled
+                  {students.length} Students
                 </div>
               </div>
 
-              <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-3">
+              <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-2.5">
                 <div className="flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase">
                   <UserCheck className="w-4 h-4" />
-                  <span>Role: Faculty / Examiner</span>
+                  <span>Faculty / Examiner</span>
                 </div>
                 <p className="text-xs text-slate-600">
-                  Create and schedule examinations, configure date and duration, add MCQ & descriptive questions, view candidate submissions, evaluate descriptive answers, and publish results.
+                  Create exams, add questions, grade written answers, and publish results.
                 </p>
                 <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-500 font-mono">
-                  Assigned Users: {faculty.length} Active Staff
+                  {faculty.length} Faculty
                 </div>
               </div>
 
-              <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-3">
+              <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-2.5">
                 <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 uppercase">
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Role: System Administrator</span>
+                  <span>Administrator</span>
                 </div>
                 <p className="text-xs text-slate-600">
-                  Full superuser governance restricted to <code>admin@123</code> / pass: <code>admin@123</code>. Manage students, manage faculty, manage user roles, audit activity, and inspect system telemetry.
+                  Full access (<code>admin@123</code>) to add questions, manage users, and view performance.
                 </p>
                 <div className="pt-2 border-t border-slate-100 text-[11px] text-emerald-700 font-mono font-semibold">
-                  Active Verified Super Admin
+                  Verified
                 </div>
               </div>
             </div>
@@ -873,9 +848,8 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
             <div className="bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden">
               <div className="p-4 border-b border-slate-100 flex items-center justify-between">
                 <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Real-Time Examination Activity Stream
+                  Recent Activity
                 </h4>
-                <span className="text-xs text-slate-500">Live Audit Trail</span>
               </div>
               <div className="divide-y divide-slate-100">
                 {INITIAL_LOGS.map((log) => (
@@ -901,62 +875,54 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
           {adminSubTab === 'statistics' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-                <span className="text-xs text-slate-500">Total Enrolled Students</span>
+                <span className="text-xs text-slate-500">Enrolled Students</span>
                 <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
                   1,480
                 </div>
-                <span className="text-[11px] text-emerald-600 mt-1 block">Active across 4 Departments</span>
+                <span className="text-[11px] text-emerald-600 mt-1 block">4 Departments</span>
               </div>
 
               <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-                <span className="text-xs text-slate-500">Active Faculty Members</span>
+                <span className="text-xs text-slate-500">Faculty</span>
                 <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
                   48
                 </div>
-                <span className="text-[11px] text-blue-600 mt-1 block">12 Authorized Examiners</span>
+                <span className="text-[11px] text-blue-600 mt-1 block">12 Examiners</span>
               </div>
 
               <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-                <span className="text-xs text-slate-500">Exam Pass Rate</span>
+                <span className="text-xs text-slate-500">Pass Rate</span>
                 <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
                   94.2%
                 </div>
-                <span className="text-[11px] text-emerald-600 mt-1 block">+2.1% from Trinity Term</span>
+                <span className="text-[11px] text-emerald-600 mt-1 block">+2.1% vs last term</span>
               </div>
 
               <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs">
-                <span className="text-xs text-slate-500">Cloud Firestore DB Status</span>
+                <span className="text-xs text-slate-500">Database</span>
                 <div className="text-2xl font-bold font-mono text-emerald-700 mt-1 flex items-center gap-1.5">
                   <Database className="w-5 h-5 text-emerald-600" />
                   Synced
                 </div>
-                <span className="text-[11px] text-slate-500 mt-1 block">Auto-save Latency: ~140ms</span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Firestore Active</span>
               </div>
             </div>
           )}
         </div>
       )}
 
-      {/* ======================================================== */}
-      {/* MODAL: EVALUATE DESCRIPTIVE ANSWERS (Activity Diagram Swimlane 4) */}
-      {/* ======================================================== */}
+      {/* MODAL: EVALUATE WRITTEN ANSWERS */}
       {gradingSubmission && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-150">
-            {/* Header */}
-            <div className="p-6 border-b border-slate-800 bg-[#0B132B] text-white flex items-start justify-between shrink-0">
+            <div className="p-5 border-b border-slate-800 bg-[#0B132B] text-white flex items-start justify-between shrink-0">
               <div>
-                <div className="flex items-center gap-2 text-xs text-blue-400 font-semibold mb-1">
-                  <span className="font-mono bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-400/30">
-                    EXAMINER EVALUATION CONSOLE
-                  </span>
-                  <span>Paper: {gradingSubmission.examCode}</span>
-                </div>
+                <span className="text-[11px] font-mono text-blue-300">{gradingSubmission.examCode}</span>
                 <h3 className="text-lg font-bold text-white tracking-tight">
-                  Review & Grade Descriptive Response: {gradingSubmission.studentName}
+                  Grade Answer · {gradingSubmission.studentName}
                 </h3>
                 <p className="text-xs text-slate-300 mt-0.5">
-                  Candidate ID: <span className="font-mono">{gradingSubmission.studentId}</span> · MCQ Auto-Score: <strong className="text-white">{gradingSubmission.objectiveScore} / {gradingSubmission.objectiveTotal}</strong>
+                  {gradingSubmission.studentId} · MCQ Score: <strong className="text-white">{gradingSubmission.objectiveScore} / {gradingSubmission.objectiveTotal}</strong>
                 </p>
               </div>
               <button
@@ -967,36 +933,32 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
               </button>
             </div>
 
-            {/* Scrollable Content */}
             <div className="p-6 space-y-4 overflow-y-auto flex-1 text-xs text-slate-700">
-              {/* Question Context & Rubric */}
-              <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-4 space-y-2">
+              <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3.5 space-y-1.5">
                 <span className="text-[11px] font-bold text-blue-900 uppercase tracking-wider block">
-                  Question Prompt (Descriptive Algorithmic Proof):
+                  Question & Rubric
                 </span>
-                <p className="text-slate-800 font-medium leading-relaxed">
-                  Design an efficient algorithm to detect whether a directed, weighted graph contains an arbitrary negative cycle. Explain your algorithm's invariant, edge-relaxation steps, and state both asymptotic time and space complexity.
+                <p className="text-slate-800 font-medium">
+                  Design an algorithm to detect a negative cycle in a weighted directed graph and state its time and space complexity.
                 </p>
-                <div className="pt-2 border-t border-blue-200/60 text-[11px] text-blue-800">
-                  <strong>Examiner Rubric:</strong> Full 15 marks require: (1) Bellman-Ford/SPFA formulation, (2) Correct relaxation invariant for k passes, (3) |V|-th pass detection condition, (4) O(V·E) time & O(V) space.
-                </div>
+                <p className="text-[11px] text-blue-800">
+                  <strong>Key points:</strong> Bellman-Ford relaxation, |V|-th pass check, O(V·E) time, O(V) space.
+                </p>
               </div>
 
-              {/* Student's Written Response */}
               <div>
                 <label className="block font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-1.5">
-                  Candidate Submitted Solution:
+                  Student Answer
                 </label>
-                <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl font-sans text-xs leading-relaxed text-slate-900 max-h-48 overflow-y-auto whitespace-pre-wrap">
+                <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl font-sans text-xs leading-relaxed text-slate-900 max-h-48 overflow-y-auto whitespace-pre-wrap">
                   {gradingSubmission.descriptiveAnswerText}
                 </div>
               </div>
 
-              {/* Grading Input & Remarks */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                 <div>
                   <label className="block font-semibold text-slate-800 mb-1">
-                    Award Marks (Max {gradingSubmission.descriptiveMax}):
+                    Marks (Max {gradingSubmission.descriptiveMax})
                   </label>
                   <input
                     type="number"
@@ -1010,20 +972,19 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
 
                 <div className="sm:col-span-2">
                   <label className="block font-semibold text-slate-800 mb-1">
-                    Examiner Feedback / Audit Notes:
+                    Feedback
                   </label>
                   <input
                     type="text"
                     value={examinerNotesInput}
                     onChange={(e) => setExaminerNotesInput(e.target.value)}
-                    placeholder="e.g. Invariant well stated. Deducted 1 pt for omitted predecessor array details."
+                    placeholder="Add brief feedback..."
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-xs focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Footer */}
             <div className="p-4 md:px-6 bg-slate-50 border-t border-slate-200/80 flex items-center justify-between shrink-0">
               <button
                 onClick={() => setGradingSubmission(null)}
@@ -1036,22 +997,20 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 onClick={handleSaveDescriptiveGrade}
                 className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors cursor-pointer"
               >
-                Save Evaluation & Calculate Final Marks
+                Save Grade
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ======================================================== */}
-      {/* MODAL: ADD STUDENT (admin@123) */}
-      {/* ======================================================== */}
+      {/* MODAL: ADD STUDENT */}
       {isAddStudentOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl p-6 space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-sm font-bold text-slate-900">
-                Enroll New Candidate (Administrator)
+                Add Student
               </h3>
               <button onClick={() => setIsAddStudentOpen(false)} className="text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
@@ -1059,7 +1018,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
             </div>
             <form onSubmit={handleAddStudent} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Student Candidate ID:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Student ID</label>
                 <input
                   type="text"
                   required
@@ -1070,7 +1029,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Full Legal Name:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Full Name</label>
                 <input
                   type="text"
                   required
@@ -1081,7 +1040,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">University Email:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Email</label>
                 <input
                   type="email"
                   placeholder="e.g. l.montgomery@oxford.edu"
@@ -1091,7 +1050,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Department:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Department</label>
                 <select
                   value={newStudentDept}
                   onChange={(e) => setNewStudentDept(e.target.value)}
@@ -1123,15 +1082,13 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
         </div>
       )}
 
-      {/* ======================================================== */}
-      {/* MODAL: ADD FACULTY (admin@123) */}
-      {/* ======================================================== */}
+      {/* MODAL: ADD FACULTY */}
       {isAddFacultyOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl p-6 space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-sm font-bold text-slate-900">
-                Register Academic Faculty (Administrator)
+                Add Faculty
               </h3>
               <button onClick={() => setIsAddFacultyOpen(false)} className="text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
@@ -1139,7 +1096,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
             </div>
             <form onSubmit={handleAddFaculty} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Faculty ID:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Faculty ID</label>
                 <input
                   type="text"
                   required
@@ -1150,7 +1107,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Faculty Name:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Name</label>
                 <input
                   type="text"
                   required
@@ -1161,7 +1118,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Department:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Department</label>
                 <select
                   value={newFacultyDept}
                   onChange={(e) => setNewFacultyDept(e.target.value)}
@@ -1174,10 +1131,10 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 </select>
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Academic Role:</label>
+                <label className="block font-semibold text-slate-700 mb-1">Role</label>
                 <input
                   type="text"
-                  placeholder="e.g. Senior Lecturer, Associate Professor"
+                  placeholder="e.g. Senior Lecturer"
                   value={newFacultyRole}
                   onChange={(e) => setNewFacultyRole(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg"
@@ -1195,7 +1152,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                   type="submit"
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
                 >
-                  Register Faculty
+                  Add Faculty
                 </button>
               </div>
             </form>
@@ -1203,13 +1160,13 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
         </div>
       )}
 
-      {/* Student Audit Detail Modal */}
+      {/* Student Detail Modal */}
       {selectedStudent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 border border-slate-200 shadow-xl space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-sm font-bold text-slate-900">
-                Candidate Invigilation Stream: {selectedStudent.studentName}
+                Live Feed · {selectedStudent.studentName}
               </h3>
               <button
                 onClick={() => setSelectedStudent(null)}
@@ -1218,13 +1175,10 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 ✕
               </button>
             </div>
-            <div className="bg-slate-900 rounded-xl h-48 flex items-center justify-center text-slate-400 font-mono text-xs relative overflow-hidden">
+            <div className="bg-slate-900 rounded-xl h-44 flex items-center justify-center text-slate-400 font-mono text-xs relative overflow-hidden">
               <div className="text-center p-4">
                 <Video className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-                <span>Simulated Secure Video Feed</span>
-                <p className="text-[10px] text-slate-500 mt-1">
-                  Oxford Proctor AI: Continuous Gaze & Audio Tracking · 1080p
-                </p>
+                <span>Webcam Preview</span>
               </div>
               <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-emerald-500/80 text-white text-[10px] font-mono">
                 LIVE
@@ -1232,13 +1186,13 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
             </div>
             <div className="text-xs space-y-1.5 text-slate-600">
               <p>
-                <strong>Candidate ID:</strong> {selectedStudent.studentId}
+                <strong>ID:</strong> {selectedStudent.studentId}
               </p>
               <p>
-                <strong>Progress:</strong> {selectedStudent.answeredCount} of {selectedStudent.totalQuestions} questions answered
+                <strong>Progress:</strong> {selectedStudent.answeredCount} / {selectedStudent.totalQuestions} answered
               </p>
               <p>
-                <strong>Last Heartbeat:</strong> {selectedStudent.lastActivity}
+                <strong>Last Activity:</strong> {selectedStudent.lastActivity}
               </p>
             </div>
             <div className="pt-2 flex justify-end">
@@ -1246,7 +1200,7 @@ export const FacultyProctorView: React.FC<FacultyProctorViewProps> = ({
                 onClick={() => setSelectedStudent(null)}
                 className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800"
               >
-                Close Audit View
+                Close
               </button>
             </div>
           </div>
