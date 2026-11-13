@@ -1,0 +1,8 @@
+{
+  "name": "ExamSphere - University Examination Platform",
+  "description": "A premium, distraction-free university examination platform with real-time countdown timer, question navigation, intuitive proctoring, and comprehensive analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

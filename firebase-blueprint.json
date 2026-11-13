@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role-based access for students and faculty.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "University email address" },
+        "displayName": { "type": "string", "description": "Candidate or Faculty full name" },
+        "role": { "type": "string", "enum": ["student", "faculty"], "description": "User role" },
+        "candidateId": { "type": "string", "description": "University ID (e.g. CS-2024-8841 or FAC-0491)" },
+        "department": { "type": "string", "description": "Academic department" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "email", "displayName", "role"]
+    },
+    "ExamDocument": {
+      "title": "ExamDocument",
+      "description": "Examination paper configuration and question bank.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique examination identifier" },
+        "code": { "type": "string", "description": "Course code (e.g. CS-301)" },
+        "title": { "type": "string", "description": "Examination paper title" },
+        "department": { "type": "string", "description": "Academic department" },
+        "instructor": { "type": "string", "description": "Faculty lead name" },
+        "durationMinutes": { "type": "number", "description": "Exam duration in minutes" },
+        "totalMarks": { "type": "number", "description": "Total obtainable marks" },
+        "questionCount": { "type": "number", "description": "Total question count" },
+        "status": { "type": "string", "enum": ["available", "scheduled", "completed"], "description": "Exam status" },
+        "proctoringMode": { "type": "string", "description": "Proctoring security level" },
+        "passingScore": { "type": "number", "description": "Passing grade percentage" },
+        "createdBy": { "type": "string", "description": "Faculty creator UID" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "code", "title", "department", "durationMinutes", "totalMarks", "status"]
+    },
+    "ExamSubmission": {
+      "title": "ExamSubmission",
+      "description": "Final recorded response and evaluated score for a candidate examination.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Submission record identifier" },
+        "examId": { "type": "string", "description": "Foreign key to ExamDocument" },
+        "examCode": { "type": "string", "description": "Course code (e.g. CS-301)" },
+        "studentUid": { "type": "string", "description": "Candidate Firebase Auth UID" },
+        "studentName": { "type": "string", "description": "Candidate full name" },
+        "studentId": { "type": "string", "description": "University Student ID" },
+        "score": { "type": "number", "description": "Earned score" },
+        "totalPossible": { "type": "number", "description": "Total possible marks" },
+        "grade": { "type": "string", "description": "Letter grade (A, B, C, D, F)" },
+        "percentage": { "type": "number", "description": "Percentage score" },
+        "submittedAt": { "type": "string", "description": "Submission timestamp" }
+      },
+      "required": ["id", "examId", "studentUid", "score", "grade"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile documents accessible by owner and faculty."
+    },
+    "/exams/{examId}": {
+      "schema": { "$ref": "#/entities/ExamDocument" },
+      "description": "Curriculum examination papers readable by authenticated users and managed by faculty."
+    },
+    "/submissions/{submissionId}": {
+      "schema": { "$ref": "#/entities/ExamSubmission" },
+      "description": "Completed student examination papers, readable by student and faculty."
+    }
+  }
+}
